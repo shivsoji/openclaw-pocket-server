@@ -1,4 +1,4 @@
-# 🦞 OpenClaw 24/7 Pocket Server
+# 🦞 OpenClaw Pocket Server
 
 <img src="docs/images/banner.png" alt="OpenClaw 24/7 Pocket Server">
 
@@ -8,18 +8,21 @@
 ![Termux](https://img.shields.io/badge/Termux-Required-orange)
 ![No proot](https://img.shields.io/badge/proot--distro-Not%20Required-blue)
 ![SSH](https://img.shields.io/badge/SSH-Port%208022-blueviolet)
-![License MIT](https://img.shields.io/badge/License-MIT-yellow)
+![License MIT](https://img.shields.io/github/license/PsProsen-Dev/openclaw-pocket-server)
+![GitHub Stars](https://img.shields.io/github/stars/PsProsen-Dev/openclaw-pocket-server)
 
 An enhanced, battle-tested installer for [OpenClaw](https://openclaw.ai) on Android via Termux. Runs natively — no proot, no Ubuntu, no bloat.
 
-## Why a Phone?
+## ⚡ Why a Phone?
 
-- **Low power + built-in UPS** — runs 24/7 on minimal power; battery survives outages
-- **Repurpose old phones** — put that spare phone to work instead of buying a mini PC
-- **Sufficient performance** — even older models handle OpenClaw easily
-- **Zero risk** — factory-reset a spare phone, no personal data involved
+| Benefit | Details |
+|---|---|
+| 🔋 **Low power + built-in UPS** | Runs 24/7 on minimal power; battery survives outages |
+| 📱 **Repurpose old phones** | Put that spare phone to work instead of buying a mini PC |
+| 🚀 **Sufficient performance** | Even older models handle OpenClaw easily |
+| 🔒 **Zero risk** | Factory-reset a spare phone, no personal data involved |
 
-## What's Included
+## 📦 What's Included
 
 | Feature | Details |
 |---|---|
@@ -31,7 +34,7 @@ An enhanced, battle-tested installer for [OpenClaw](https://openclaw.ai) on Andr
 | 🔧 Native Fixes | `renameat2`, `ar` symlink, `--disable-warning` bypass |
 | ⚡ Wakelock | Prevents Android from killing the process |
 
-## Required Apps
+## 📲 Required Apps
 
 Install these from **F-Droid** (NOT the Play Store):
 
@@ -45,7 +48,7 @@ Install these from **F-Droid** (NOT the Play Store):
 
 > After installing Termux:Boot, **open it once** to grant boot permissions.
 
-## Quick Install (One Command)
+## 🚀 Quick Install (One Command)
 
 Open Termux and paste:
 
@@ -63,7 +66,7 @@ That's it. The installer handles everything:
 6. ✅ Sets up Termux:Boot auto-start script
 7. ✅ Runs verification checks
 
-## After Installation
+## 🛠️ After Installation
 
 ### Step 1: Configure OpenClaw
 
@@ -111,7 +114,7 @@ Then open in your browser: `http://localhost:18789/`
 
 > Run `openclaw dashboard` on the phone to get the full URL with token.
 
-## SSH Setup
+## 🔐 SSH Setup
 
 ### Change Password
 
@@ -136,160 +139,7 @@ Connect without password:
 ssh -i ~/.ssh/openclaw_key -p 8022 <username>@<phone-ip>
 ```
 
-## Remote Access with Tailscale (Optional)
-
-Want to access your OpenClaw server from **anywhere in the world** — not just your local WiFi? Use [Tailscale](https://tailscale.com/).
-
-Tailscale creates a secure private network (tailnet) between your devices. No port forwarding, no dynamic DNS, no firewall headaches.
-
-### Install Tailscale on Your Phone
-
-1. Install [Tailscale from Google Play](https://play.google.com/store/apps/details?id=com.tailscale.ipn) or [F-Droid](https://f-droid.org/packages/com.tailscale.ipn/)
-2. Open the Tailscale app → Sign in with your account
-3. Toggle the VPN **ON**
-4. Note your phone's Tailscale IP (it will be `100.x.x.x`)
-
-> 💡 Install Tailscale on your PC/laptop too — both devices must be on the same tailnet.
-
-### Mode 1: Tailnet-Only (Serve) — Recommended
-
-Access your dashboard securely from any device on your tailnet:
-
-```bash
-openclaw gateway --tailscale serve
-```
-
-Or set it in config (`~/.openclaw/openclaw.json`):
-
-```json
-{
-  "gateway": {
-    "bind": "loopback",
-    "tailscale": { "mode": "serve" }
-  }
-}
-```
-
-Then open `https://<your-phone-magicDNS>/` from any device on your tailnet.
-
-### Mode 2: Public Internet (Funnel)
-
-Expose your server to the **public internet** via Tailscale Funnel (HTTPS):
-
-```bash
-openclaw gateway --tailscale funnel --auth password
-```
-
-> ⚠️ Funnel requires a shared password (`OPENCLAW_GATEWAY_PASSWORD` env var or config). Never expose without auth!
-
-### Mode 3: Direct Tailnet IP
-
-Bind the gateway directly to your Tailnet IP (no Serve/Funnel):
-
-```json
-{
-  "gateway": {
-    "bind": "tailnet",
-    "auth": { "mode": "token", "token": "your-token" }
-  }
-}
-```
-
-Connect from another device: `http://<tailscale-ip>:18789/`
-
-### Tailscale Requirements
-
-- Tailscale CLI installed and logged in
-- Funnel needs: Tailscale v1.38.3+, MagicDNS, HTTPS enabled
-- Funnel only supports ports `443`, `8443`, `10000`
-
-> 📖 Full Tailscale docs: [OpenClaw Tailscale Guide](https://github.com/openclaw/openclaw/blob/main/docs/gateway/tailscale.md)
-
-## Security
-
-Running OpenClaw on a **dedicated Android phone** already gives you significant security advantages over a bare-metal PC or VPS setup:
-
-### ✅ What's Already Secured
-
-| Layer | Protection | Details |
-|---|---|---|
-| 🏗️ **Physical Isolation** | Your main PC is never at risk | OpenClaw runs on a separate phone — compromise doesn't spread to your laptop/desktop |
-| 📱 **Android Sandbox** | Termux is sandboxed by Android | Even if compromised, it can't access other apps, photos, or system files |
-| 🔒 **Localhost Binding** | Gateway only listens on `127.0.0.1` | Port 18789 is never exposed to the public internet |
-| 🚫 **No Root Required** | Runs in Termux user space | No root privileges = smaller attack surface |
-| 🔑 **SSH Protected** | Password-based auth on port `8022` | Not the default port 22, reduces automated scan risk |
-| 🗑️ **Burner Device** | Factory-reset an old phone | Zero personal data on the server device |
-| ⚙️ **No systemd** | Our `systemctl` stub prevents accidental service exposure | Services can't be enabled/disabled by the AI agent |
-
-### ⚠️ What You Should NEVER Connect
-
-Regardless of how well you harden your setup, **never** connect these to OpenClaw:
-
-- ❌ Primary email accounts
-- ❌ Banking or financial services
-- ❌ Password managers (1Password, Bitwarden)
-- ❌ Work accounts (Slack, Google Workspace, corporate)
-- ❌ Social media with irreplaceable history
-- ❌ Cryptocurrency wallets/exchanges
-- ❌ Government or healthcare portals
-- ❌ Your primary GitHub account
-
-### ✅ Acceptable Connections (Burner Only)
-
-- ✅ Dedicated Gmail created **only** for OpenClaw notifications
-- ✅ Telegram bot account (not your personal Telegram)
-- ✅ Development-only GitHub for test repos
-- ✅ RSS feeds and news aggregators
-- ✅ Low-stakes services you could recreate in an hour
-
-> **Rule of thumb**: If losing the account would cause significant impact, don't connect it.
-
-### 🔐 Hardening Tips
-
-**1. Change the default SSH password immediately:**
-```bash
-passwd
-```
-
-**2. Use SSH keys instead of passwords** (see [SSH Guide](docs/ssh-guide.md)):
-```bash
-# On your PC:
-ssh-keygen -t ed25519 -f ~/.ssh/openclaw_key -N ""
-ssh-copy-id -i ~/.ssh/openclaw_key.pub -p 8022 <username>@<phone-ip>
-```
-
-**3. Set DM policy to `pairing`** — prevents strangers from sending commands to your bot:
-```json
-{
-  "channels": {
-    "telegram": { "dmPolicy": "pairing" }
-  }
-}
-```
-
-**4. Restrict filesystem access** — add to your OpenClaw config:
-```yaml
-tools:
-  filesystem:
-    allowedPaths:
-      - "/data/data/com.termux/files/home/workspace"
-    deniedPaths:
-      - "/data/data/com.termux/files/home/.ssh"
-      - "/data/data/com.termux/files/home/.openclaw/credentials"
-```
-
-**5. Run the built-in security audit:**
-```bash
-openclaw security audit --deep
-```
-
-**6. Use Tailscale** instead of exposing SSH to the internet (see [Tailscale section](#remote-access-with-tailscale-optional))
-
-**7. Connect only burner accounts** — every account connected to OpenClaw should be one you could lose without significant impact.
-
-> 📖 For advanced hardening (Docker sandboxing, credential brokering, egress filtering), see the [OpenClaw Security Hardening Guide](https://aimaker.substack.com/p/openclaw-security-hardening-guide).
-
-## Phone Setup Tips
+## 📱 Phone Setup Tips
 
 ### Enable Stay Awake
 
@@ -308,12 +158,12 @@ Running 24/7 at 100% can damage the battery.
 1. **Settings** > **Battery** > **Battery optimization**
 2. Find **Termux** → set to **Not optimized** / **Unrestricted**
 
-## Troubleshooting
+## 🔧 Troubleshooting
 
 <details>
 <summary><b>❌ <code>error: expected absolute path: "--disable-warning=ExperimentalWarning"</code></b></summary>
 
-**Cause**: OpenClaw tries to respawn Node.js with `--disable-warning` flag, which conflicts with `NODE_OPTIONS` containing `-r bionic-compat.js` on Node v24+.
+**Cause**: OpenClaw tries to respawn Node.js with `--disable-warning` flag, which conflicts with `NODE_OPTIONS` on Node v24+.
 
 **Fix**: Already handled by the installer (`OPENCLAW_NODE_OPTIONS_READY=1`). If you see this after an update:
 
@@ -326,7 +176,7 @@ source ~/.bashrc
 <details>
 <summary><b>❌ <code>make: ar: No such file or directory</code> (sharp build)</b></summary>
 
-**Cause**: Termux's `binutils` package installs `llvm-ar` but doesn't create the `ar` symlink that `node-gyp` expects.
+**Cause**: Termux's `binutils` installs `llvm-ar` but doesn't create the `ar` symlink that `node-gyp` expects.
 
 **Fix**:
 ```bash
@@ -338,7 +188,7 @@ npm rebuild sharp --prefix $PREFIX/lib/node_modules/openclaw
 <details>
 <summary><b>❌ <code>renameat2</code> / <code>RENAME_NOREPLACE</code> undeclared</b></summary>
 
-**Cause**: Android Bionic doesn't expose `renameat2()` in older API levels. The `koffi` native module needs it.
+**Cause**: Android Bionic doesn't expose `renameat2()` in older API levels.
 
 **Fix**: Already handled by `termux-compat.h`. If rebuilding:
 ```bash
@@ -395,7 +245,7 @@ ssh-keygen -R "[<phone-ip>]:8022"
 ```
 </details>
 
-## Update
+## 🔄 Update
 
 ```bash
 openclaw update
@@ -407,7 +257,7 @@ Or re-run the installer to refresh patches:
 curl -sL https://raw.githubusercontent.com/PsProsen-Dev/openclaw-pocket-server/main/bootstrap.sh | bash && source ~/.bashrc
 ```
 
-## Uninstall
+## 🗑️ Uninstall
 
 ```bash
 npm uninstall -g openclaw
@@ -415,12 +265,12 @@ rm -rf ~/.openclaw ~/.openclaw-android ~/openclaw-pocket-server
 # Remove the environment block from ~/.bashrc manually
 ```
 
-## Project Structure
+## 📁 Project Structure
 
 ```
 openclaw-pocket-server/
 ├── bootstrap.sh                  # curl one-liner entry point
-├── install.sh                    # Master installer (8 steps)
+├── install.sh                    # Master installer (10 steps)
 ├── scripts/
 │   ├── check-env.sh              # Pre-flight checks
 │   ├── install-deps.sh           # Termux packages
@@ -444,11 +294,22 @@ openclaw-pocket-server/
 └── .gitignore
 ```
 
-## Credits
+## 🎁 Bonus: AI CLI Tools
 
-- [OpenClaw](https://openclaw.ai) — The AI gateway
-- Built with ❤️ by **Prosenjit Paul (PsProsen-Dev)** and **Jarvis (RTX⚡)**
+The compatibility patches also enable popular AI CLI tools:
 
-## License
+| Tool | Install |
+|---|---|
+| [Claude Code](https://github.com/anthropics/claude-code) | `npm i -g @anthropic-ai/claude-code` |
+| [Gemini CLI](https://github.com/google-gemini/gemini-cli) | `npm i -g @google/gemini-cli` |
+| [Codex CLI](https://github.com/openai/codex) | `npm i -g @openai/codex` |
 
-MIT
+## 🙏 Credits
+
+- [OpenClaw](https://openclaw.ai) — The AI agent framework
+- [AidanPark/openclaw-android](https://github.com/AidanPark/openclaw-android) — Original Android compatibility patches (inspiration)
+- Built with ⚡ by **Jarvis (RTX⚡🦞)** for **PsProsen-Dev**
+
+## 📄 License
+
+MIT — do whatever you want with it.
