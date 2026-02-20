@@ -300,15 +300,15 @@ The compatibility patches also enable popular AI CLI tools:
 
 | Tool | Install |
 |---|---|
-| [Claude Code](https://github.com/anthropics/claude-code) | `npm i -g @anthropic-ai/claude-code` |
 | [Gemini CLI](https://github.com/google-gemini/gemini-cli) | `npm i -g @google/gemini-cli` |
+| [Claude Code](https://github.com/anthropics/claude-code) | `npm i -g @anthropic-ai/claude-code` |
+| [Qwen CLI](https://github.com/QwenLM/qwen-cli) | `npm i -g @anthropic-ai/qwen-cli` |
 | [Codex CLI](https://github.com/openai/codex) | `npm i -g @openai/codex` |
 
 ## 🙏 Credits
 
 - [OpenClaw](https://openclaw.ai) — The AI agent framework
-- [AidanPark/openclaw-android](https://github.com/AidanPark/openclaw-android) — Original Android compatibility patches (inspiration)
-- Built with ⚡ by **Jarvis (RTX⚡🦞)** for **PsProsen-Dev**
+- Built with ⚡ by **Jarvis (RTX⚡🦞)** for [**PsProsen-Dev**](https://github.com/PsProsen-Dev)
 
 ## 📄 License
 
