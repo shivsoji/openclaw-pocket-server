@@ -53,7 +53,7 @@ Install these from **F-Droid** (NOT the Play Store):
 Open Termux and paste:
 
 ```bash
-curl -sL https://raw.githubusercontent.com/PsProsen-Dev/openclaw-pocket-server/main/bootstrap.sh | bash && source ~/.bashrc
+curl -sL https://raw.githubusercontent.com/PsProsen-Dev/openclaw-pocket-server/master/bootstrap.sh | bash && source ~/.bashrc
 ```
 
 That's it. The installer handles everything:
@@ -254,7 +254,7 @@ openclaw update
 Or re-run the installer to refresh patches:
 
 ```bash
-curl -sL https://raw.githubusercontent.com/PsProsen-Dev/openclaw-pocket-server/main/bootstrap.sh | bash && source ~/.bashrc
+curl -sL https://raw.githubusercontent.com/PsProsen-Dev/openclaw-pocket-server/master/bootstrap.sh | bash && source ~/.bashrc
 ```
 
 ## 🗑️ Uninstall
