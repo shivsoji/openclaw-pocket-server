@@ -6,7 +6,7 @@
 set -euo pipefail
 
 REPO="PsProsen-Dev/openclaw-pocket-server"
-BRANCH="main"
+BRANCH="master"
 BASE="https://raw.githubusercontent.com/${REPO}/${BRANCH}"
 
 RED='\033[0;31m'
